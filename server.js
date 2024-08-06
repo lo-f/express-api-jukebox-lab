@@ -5,6 +5,7 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 const methodOverride = require('method-override')
+const Track = require('./models/Track')
 
 mongoose.connect(process.env.MONGODB_URI)
 
@@ -26,7 +27,8 @@ const Track = require('./models/Track')
 /* ------------------------------- All Tracks ------------------------------- */
 app.get('/tracks', async (req,res) => {
     try {
-        res.json({ name: 'test' })
+        const track = await Track.find()
+        res.json(track)
     } catch (err) {
         res.status(200)
     }
@@ -35,7 +37,11 @@ app.get('/tracks', async (req,res) => {
 /* -------------------------------- New Track ------------------------------- */
 app.post('/tracks', async (req, res) => {
     try {
-        res.json({ name: 'new track test'})
+        const track = await Track.create({
+            title: req.body.title,
+            artist: req.body.artist
+        })
+        res.json({track})
     } catch (err) {
         res.status(201)
     }
@@ -69,8 +75,6 @@ app.delete('/tracks:id', async (req, res) => {
     res.redirect('/tracks')
     res.json({string: 'delte is working'})
 })
-
-
 
 app.listen(3000, () => {
     console.log('The express app is ready')
