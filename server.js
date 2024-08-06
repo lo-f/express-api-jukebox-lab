@@ -17,25 +17,6 @@ mongoose.connection.on('connected', () => {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* -------------------------------------------------------------------------- */
 /*                                   ROUTES                                   */
 /* -------------------------------------------------------------------------- */
@@ -43,17 +24,16 @@ mongoose.connection.on('connected', () => {
 /* ------------------------------- All Tracks ------------------------------- */
 app.get('/', async (req,res) => {
     try {
-        res.render(('index.ejs'))
-        console.log('I am working')
+        res.json({ name: 'test' })
     } catch (err) {
         res.status(200)
     }
 });
 
 /* -------------------------------- New Track ------------------------------- */
-app.get('/new', async (req, res) => {
+app.post('/new', async (req, res) => {
     try {
-        res.render('tracks/new.ejs')
+        res.json({ name: 'new track test'})
     } catch (err) {
         res.status(201)
     }
