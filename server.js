@@ -16,6 +16,32 @@ mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}`);
 })
 
+
+/* -------------------------------------------------------------------------- */
+/*                                   ROUTES                                   */
+/* -------------------------------------------------------------------------- */
+
+/* ------------------------------- All Tracks ------------------------------- */
+app.get('/', async (req,res) => {
+    try {
+        res.json({ name: 'test' })
+    } catch (err) {
+        res.status(200)
+    }
+});
+
+/* -------------------------------- New Track ------------------------------- */
+app.post('/new', async (req, res) => {
+    try {
+        res.json({ name: 'new track test'})
+    } catch (err) {
+        res.status(201)
+    }
+})
+
+
+
+
 app.listen(3000, () => {
     console.log('The express app is ready')
 })
