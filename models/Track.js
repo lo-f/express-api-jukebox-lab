@@ -13,4 +13,4 @@ const trackSchema = new mongoose.Schema({
 
 const Track = mongoose.model('Track', trackSchema);
 
-module.exports = Workout;
+module.exports = Track;

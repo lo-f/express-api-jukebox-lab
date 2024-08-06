@@ -16,13 +16,15 @@ mongoose.connection.on('connected', () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}`);
 })
 
+const Track = require('./models/Track')
+
 
 /* -------------------------------------------------------------------------- */
 /*                                   ROUTES                                   */
 /* -------------------------------------------------------------------------- */
 
 /* ------------------------------- All Tracks ------------------------------- */
-app.get('/', async (req,res) => {
+app.get('/tracks', async (req,res) => {
     try {
         res.json({ name: 'test' })
     } catch (err) {
@@ -31,7 +33,7 @@ app.get('/', async (req,res) => {
 });
 
 /* -------------------------------- New Track ------------------------------- */
-app.post('/new', async (req, res) => {
+app.post('/tracks', async (req, res) => {
     try {
         res.json({ name: 'new track test'})
     } catch (err) {
@@ -39,6 +41,34 @@ app.post('/new', async (req, res) => {
     }
 })
 
+/* ---------------------------- Show Single Track --------------------------- */
+app.get('/tracks/:id', async (req, res) => {
+    try {
+        const foundTrack = await Track.findById(req.params.id)
+        res.json({ string: 'tracks/:id is working'})
+        res.json({ track: foundTrack})
+    } catch (err) {
+        res.status(200)
+    }
+})
+
+/* ----------------------------- Update a Track ----------------------------- */
+app.put('/tracks/:id', async (req, res) => {
+    try {
+        await Track.findByIdAndUpdate(req.params.id, req.body)
+        res.json({string: 'update is working'})
+        res.redirect(`/tracks/${req.params.id}`)
+    } catch (err) {
+        res.status(200)
+    }
+})
+
+/* ----------------------------- Delete a Track ----------------------------- */
+app.delete('/tracks:id', async (req, res) => {
+    await Track.findByIdAndDelete(req.params.id)
+    res.redirect('/tracks')
+    res.json({string: 'delte is working'})
+})
 
 
 
