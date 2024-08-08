@@ -59,10 +59,14 @@ app.get('/tracks/:id', async (req, res) => {
 /* ----------------------------- Update a Track ----------------------------- */
 app.put('/tracks/:id', async (req, res) => {
     try {
-        await Track.findByIdAndUpdate(req.params.id, req.body)
-        res.redirect(`/tracks/${req.params.id}`)
+        const updatedTrack = await Track.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        res.status(200).json(updatedTrack)
     } catch (err) {
-        res.status(200)
+        console.log(err)
     }
 })
 
