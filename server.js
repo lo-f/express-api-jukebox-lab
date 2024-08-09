@@ -72,8 +72,12 @@ app.put('/tracks/:id', async (req, res) => {
 
 /* ----------------------------- Delete a Track ----------------------------- */
 app.delete('/tracks/:id', async (req, res) => {
-    await Track.findByIdAndDelete(req.params.id)
-    res.redirect('/tracks')
+    try {
+        const deletedTrack = await Track.findByIdAndDelete(req.params.id)
+        res.status(200).json(deletedTrack);
+    } catch (error) {
+        console.log(error)
+    }
 })
 
 app.listen(3000, () => {
